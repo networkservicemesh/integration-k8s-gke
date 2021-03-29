@@ -1,0 +1,25 @@
+---
+version: 1.0
+providers:
+  - name: "gke"
+    kind: "shell"
+    instances: 1
+    retry: 3
+    node-count: 2
+    enabled: true
+    timeout: 900  # 15 minutes to start cluster
+    env:
+      - GKE_PROJECT_ID=${GCLOUD_PROJECT_ID}
+      - CLUSTER_RULES_PREFIX=gke
+      - GKE_CLUSTER_NAME=$(cluster-name)-$(date)-${GITHUB_RUN_NUMBER}-$(rands10)
+      - KUBECONFIG=$(tempdir)/config
+      - GKE_CLUSTER_ZONE=${GOOGLE_COMPUTE_ZONE}
+      - GKE_CLUSTER_TYPE=n1-standard-2
+      - GKE_CLUSTER_NUM_NODES=2
+    env-check:
+#      - GITHUB_RUN_NUMBER
+#      - GCLOUD_SERVICE_KEY
+    scripts:
+      start: scripts/gke-start.sh
+      stop: scripts/gke-destroy.sh
+      cleanup: scripts/destroy-old-clusters.sh 4 "^gke"
