@@ -13,13 +13,12 @@ providers:
       - CLUSTER_RULES_PREFIX=gke
       - GKE_CLUSTER_NAME=$(cluster-name)-$(date)-${GITHUB_RUN_NUMBER}-$(rands10)
       - KUBECONFIG=$(tempdir)/config
-      - GKE_CLUSTER_ZONE=${GCLOUD_COMPUTE_ZONE}
+      - GKE_CLUSTER_ZONE=us-central1-a
       - GKE_CLUSTER_TYPE=n1-standard-2
       - GKE_CLUSTER_NUM_NODES=2
     env-check:
       - GCLOUD_SERVICE_KEY
       - GCLOUD_PROJECT_ID
-      - GCLOUD_COMPUTE_ZONE
       - GITHUB_RUN_NUMBER
     scripts:
       start: scripts/gke-start.sh

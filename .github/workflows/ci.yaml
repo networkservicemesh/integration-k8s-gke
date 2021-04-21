@@ -119,7 +119,6 @@ jobs:
         env:
           GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
           GCLOUD_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
-          GCLOUD_COMPUTE_ZONE: ${{ secrets.GOOGLE_COMPUTE_ZONE }}
       - name: Publish test report
         uses: mikepenz/action-junit-report@v2.1.0
         if: ${{ always() }}
