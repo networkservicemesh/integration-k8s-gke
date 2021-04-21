@@ -28,9 +28,11 @@ import (
 )
 
 func TestRunBasicSuite(t *testing.T) {
+	t.Skip()
 	suite.Run(t, new(basic.Suite))
 }
 
 func TestRunMemorySuite(t *testing.T) {
+	t.Skip()
 	suite.Run(t, new(memory.Suite))
 }

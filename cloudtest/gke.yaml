@@ -4,8 +4,8 @@ providers:
   - name: "gke"
     kind: "shell"
     instances: 1
-    retry: 3
-    node-count: 2
+    retry: 1
+    node-count: 1
     enabled: true
     timeout: 900  # 15 minutes to start cluster
     env:
@@ -15,7 +15,7 @@ providers:
       - KUBECONFIG=$(tempdir)/config
       - GKE_CLUSTER_ZONE=${GCLOUD_COMPUTE_ZONE}
       - GKE_CLUSTER_TYPE=n1-standard-2
-      - GKE_CLUSTER_NUM_NODES=2
+      - GKE_CLUSTER_NUM_NODES=1
     env-check:
       - GCLOUD_SERVICE_KEY
       - GCLOUD_PROJECT_ID
