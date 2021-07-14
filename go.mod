@@ -8,4 +8,4 @@ require (
 	k8s.io/client-go v0.20.5
 )
 
-replace github.com/networkservicemesh/integration-tests => github.com/Mixaster995/integration-tests v0.0.0-20210714072306-6f54af8caf97
+replace github.com/networkservicemesh/integration-tests => github.com/Mixaster995/integration-tests v0.0.0-20210714083726-8ab5a84d4024
