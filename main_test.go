@@ -29,14 +29,14 @@ func TestRunFeatureSuite(t *testing.T) {
 	suite.Run(t, new(features.Suite))
 }
 
-//func TestRunBasicSuite(t *testing.T) {
+// func TestRunBasicSuite(t *testing.T) {
 //	suite.Run(t, new(basic.Suite))
-//}
+// }
 //
-//func TestRunMemorySuite(t *testing.T) {
+// func TestRunMemorySuite(t *testing.T) {
 //	suite.Run(t, new(memory.Suite))
-//}
+// }
 //
-//func TestRunHealSuite(t *testing.T) {
+// func TestRunHealSuite(t *testing.T) {
 //	suite.Run(t, new(heal.Suite))
-//}
+// }
