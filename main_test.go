@@ -17,15 +17,13 @@
 package main_test
 
 import (
+	"github.com/networkservicemesh/integration-tests/suites/basic"
 	"testing"
 
 	"github.com/stretchr/testify/suite"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp" // This is required for GKE authentication
 
-	"github.com/networkservicemesh/integration-tests/suites/basic"
 	"github.com/networkservicemesh/integration-tests/suites/features"
-	"github.com/networkservicemesh/integration-tests/suites/heal"
-	"github.com/networkservicemesh/integration-tests/suites/memory"
 )
 
 func TestRunFeatureSuite(t *testing.T) {
@@ -34,12 +32,4 @@ func TestRunFeatureSuite(t *testing.T) {
 
 func TestRunBasicSuite(t *testing.T) {
 	suite.Run(t, new(basic.Suite))
-}
-
-func TestRunMemorySuite(t *testing.T) {
-	suite.Run(t, new(memory.Suite))
-}
-
-func TestRunHealSuite(t *testing.T) {
-	suite.Run(t, new(heal.Suite))
 }

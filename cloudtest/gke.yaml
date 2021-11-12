@@ -23,4 +23,4 @@ providers:
     scripts:
       start: scripts/gke-start.sh
       stop: scripts/gke-destroy.sh
-      cleanup: scripts/destroy-old-clusters.sh 4 "^gke"
+      #cleanup: scripts/destroy-old-clusters.sh 4 "^gke"

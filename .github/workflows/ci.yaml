@@ -87,7 +87,8 @@ jobs:
       - name: Checkout deployments
         uses: actions/checkout@v2
         with:
-          repository: networkservicemesh/deployments-k8s
+          repository: glazychev-art/deployments-k8s
+          ref: 'gke_test'
           path: networkservicemesh/deployments-k8s
       - name: Checkout files
         uses: actions/checkout@v2
