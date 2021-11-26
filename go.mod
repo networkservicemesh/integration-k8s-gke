@@ -9,3 +9,5 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	k8s.io/client-go v0.20.5
 )
+
+replace github.com/networkservicemesh/integration-tests => github.com/glazychev-art/integration-tests v0.0.0-20211126110706-e612e41cb93c

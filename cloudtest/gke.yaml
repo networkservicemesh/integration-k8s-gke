@@ -11,7 +11,7 @@ providers:
     env:
       - GKE_PROJECT_ID=${GCLOUD_PROJECT_ID}
       - CLUSTER_RULES_PREFIX=gke
-      - GKE_CLUSTER_NAME=$(cluster-name)-$(date)-${GITHUB_RUN_NUMBER}-$(rands10)
+      - GKE_CLUSTER_NAME=testing-$(cluster-name)-$(date)-${GITHUB_RUN_NUMBER}-$(rands10)
       - KUBECONFIG=$(tempdir)/config
       - GKE_CLUSTER_ZONE=us-central1-a
       - GKE_CLUSTER_TYPE=n1-standard-2
