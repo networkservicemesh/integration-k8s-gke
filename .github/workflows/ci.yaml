@@ -87,8 +87,8 @@ jobs:
       - name: Checkout deployments
         uses: actions/checkout@v2
         with:
-          repository: networkservicemesh/deployments-k8s
-          path: networkservicemesh/deployments-k8s
+          repository: Mixaster995/deployments-k8s
+          path: Mixaster995/deployments-k8s
       - name: Checkout files
         uses: actions/checkout@v2
         with:
