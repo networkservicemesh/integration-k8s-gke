@@ -88,8 +88,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: Mixaster995/deployments-k8s
-          ref: 'test-gke'
-          path: networkservicemesh/deployments-k8s
+          ref: '94e0123e73a6e448ef75aa50a3400370591fe8f2'
+          path: Mixaster995/deployments-k8s
       - name: Checkout files
         uses: actions/checkout@v2
         with:
