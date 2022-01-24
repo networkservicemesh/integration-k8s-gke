@@ -1,4 +1,4 @@
-// Copyright (c) 2021 Doc.ai and/or its affiliates.
+// Copyright (c) 2021-2022 Doc.ai and/or its affiliates.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -26,6 +26,7 @@ import (
 	"github.com/networkservicemesh/integration-tests/suites/features"
 	"github.com/networkservicemesh/integration-tests/suites/heal"
 	"github.com/networkservicemesh/integration-tests/suites/memory"
+	"github.com/networkservicemesh/integration-tests/suites/observability"
 )
 
 func TestRunFeatureSuite(t *testing.T) {
@@ -42,4 +43,8 @@ func TestRunMemorySuite(t *testing.T) {
 
 func TestRunHealSuite(t *testing.T) {
 	suite.Run(t, new(heal.Suite))
+}
+
+func TestRunObservabilitySuite(t *testing.T) {
+	suite.Run(t, new(observability.Suite))
 }
