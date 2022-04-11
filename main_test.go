@@ -27,7 +27,7 @@ import (
 
 func TestRunFeatureSuite(t *testing.T) {
 	for i := 0; i < 10; i++ {
-		suite.Run(t, new(features.Suite))
+		suite.Run(t, new(featuresSuite))
 	}
 }
 
