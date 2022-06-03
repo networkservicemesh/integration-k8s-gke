@@ -79,6 +79,6 @@ func (s *featuresSuite) BeforeTest(suiteName, testName string) {
 	s.Suite.BeforeTest(suiteName, testName)
 }
 
-func TestRunFeatureSuiteCalico(t *testing.T) {
+func TestRunFeatureSuite(t *testing.T) {
 	suite.Run(t, new(featuresSuite))
 }
