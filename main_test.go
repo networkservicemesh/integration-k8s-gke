@@ -29,10 +29,6 @@ import (
 	"github.com/networkservicemesh/integration-tests/suites/observability"
 )
 
-func TestRunFeatureSuite(t *testing.T) {
-	suite.Run(t, new(features.Suite))
-}
-
 func TestRunBasicSuite(t *testing.T) {
 	suite.Run(t, new(basic.Suite))
 }
@@ -41,10 +37,48 @@ func TestRunMemorySuite(t *testing.T) {
 	suite.Run(t, new(memory.Suite))
 }
 
-func TestRunHealSuite(t *testing.T) {
-	suite.Run(t, new(heal.Suite))
-}
-
 func TestRunObservabilitySuite(t *testing.T) {
 	suite.Run(t, new(observability.Suite))
+}
+
+// Disabled tests:
+// TestVl3_nscs_death - https://github.com/networkservicemesh/integration-k8s-gke/issues/327
+// TestVl3_nse_death  - https://github.com/networkservicemesh/integration-k8s-gke/issues/327
+type healSuite struct {
+	heal.Suite
+}
+
+func (s *healSuite) BeforeTest(suiteName, testName string) {
+	switch testName {
+	case
+		"TestVl3_nscs_death",
+		"TestVl3_nse_death":
+		s.T().Skip()
+	}
+	s.Suite.BeforeTest(suiteName, testName)
+}
+
+func TestRunHealSuite(t *testing.T) {
+	suite.Run(t, new(healSuite))
+}
+
+// Disabled tests:
+// TestVl3_basic           - https://github.com/networkservicemesh/integration-k8s-gke/issues/327
+// TestVl3_scale_from_zero - https://github.com/networkservicemesh/integration-k8s-gke/issues/327
+type featuresSuite struct {
+	features.Suite
+}
+
+func (s *featuresSuite) BeforeTest(suiteName, testName string) {
+	switch testName {
+	case
+		"TestVl3_basic",
+		"TestVl3_scale_from_zero":
+		s.T().Skip()
+	}
+	s.Suite.BeforeTest(suiteName, testName)
+}
+
+func TestRunFeatureSuiteCalico(t *testing.T) {
+	suite.Run(t, new(featuresSuite))
 }
