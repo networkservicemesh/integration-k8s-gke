@@ -90,7 +90,7 @@ jobs:
       - name: Setup kind
         uses: engineerd/setup-kind@v0.5.0
         with:
-          image: kindest/node:v1.24.0
+          image: kindest/node:v1.21.1
       - name: Install clusterctl
         working-directory: ${{ github.repository }}
         run: |
@@ -115,11 +115,11 @@ jobs:
           kubectl get pods -A
           go test -count 1 -timeout 2h -race -v ./...
         env:
-          GCP_B64ENCODED_CREDENTIALS: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          GCP_B64ENCODED_CREDENTIALS: ${{ secrets.GCP_B64ENCODED_CREDENTIALS }}
           GCP_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
           GCP_REGION: us-central1-a
           GCP_NODE_MACHINE_TYPE: n1-standard-2
-          CLUSTER_NAME: gke-test
+          CLUSTER_NAME: gke-cluster
       - name: Publish test report
         uses: mikepenz/action-junit-report@v2.1.0
         if: ${{ always() }}
@@ -144,4 +144,4 @@ jobs:
           GCP_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
           GCP_REGION: us-central1-a
           GCP_NODE_MACHINE_TYPE: n1-standard-2
-          CLUSTER_NAME: gke-test
+          CLUSTER_NAME: gke-cluster
