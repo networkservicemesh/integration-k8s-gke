@@ -104,8 +104,8 @@ jobs:
         working-directory: ${{ github.repository }}
         run: |
           clusterctl init --infrastructure gcp
-          clusterctl generate cluster gke-cluster --flavor development \
-            --kubernetes-version v1.24.0 \
+          export IMAGE_ID="projects/$GCP_PROJECT/global/images/<IMAGE ID>"
+          clusterctl generate cluster gke-cluster --kubernetes-version v1.24.0 \
             --control-plane-machine-count=1 \
             --worker-machine-count=2 \
             > gke-cluster.yaml
@@ -119,8 +119,10 @@ jobs:
           GCP_B64ENCODED_CREDENTIALS: ${{ secrets.GCP_B64ENCODED_CREDENTIALS }}
           GCP_PROJECT: ${{ secrets.GOOGLE_PROJECT_ID }}
           GCP_REGION: us-central1-a
+          GCP_CONTROL_PLANE_MACHINE_TYPE: n1-standard-2
           GCP_NODE_MACHINE_TYPE: n1-standard-2
           CLUSTER_NAME: gke-cluster
+          GCP_NETWORK_NAME: default
       - name: Publish test report
         uses: mikepenz/action-junit-report@v2.1.0
         if: ${{ always() }}
