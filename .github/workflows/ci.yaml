@@ -110,12 +110,12 @@ jobs:
             kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user "$(gcloud config get-value account)"
         env:
           GKE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
-          GKE_CLUSTER_NAME: gke-${{ github.sha }}-${{ github.run_id }}
+          GKE_CLUSTER_NAME: gke-${{ github.run_id }}-${{ github.run_number }}
           GKE_CLUSTER_ZONE: us-central1-a
           GKE_CLUSTER_TYPE: n1-standard-2
           GKE_CLUSTER_NUM_NODES: 2
           KUBECONFIG: config
-      - name: Run tests 
+      - name: Run integration tests
         working-directory: ${{ github.repository }}
         run: |
           go test -count 1 -timeout 1h55m -race -v ./...
@@ -126,10 +126,10 @@ jobs:
         if: ${{ always() }}
         working-directory: ${{ github.repository }}
         run: |
-          gcloud container clusters delete "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}" -q 
+          gcloud container clusters delete "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}" -q
         env:
           GKE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
-          GKE_CLUSTER_NAME: gke-${{ github.sha }}-${{ github.run_id }}
+          GKE_CLUSTER_NAME: gke-${{ github.run_id }}-${{ github.run_number }}
           GKE_CLUSTER_ZONE: us-central1-a
           KUBECONFIG: config
       - name: Publish test report
