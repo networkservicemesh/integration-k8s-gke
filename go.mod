@@ -3,13 +3,11 @@ module github.com/networkservicemesh/integration-k8s-gke
 go 1.18
 
 require (
-	github.com/networkservicemesh/integration-tests v0.0.0-20221014103906-a5d52d2ccf91
+	github.com/networkservicemesh/integration-tests v0.0.0-20221218002538-baaa1f7b4082
 	github.com/stretchr/testify v1.7.0
-	k8s.io/client-go v0.20.5
 )
 
 require (
-	cloud.google.com/go v0.54.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-logr/logr v0.2.0 // indirect
 	github.com/gogo/protobuf v1.3.1 // indirect
@@ -39,6 +37,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 	k8s.io/api v0.20.5 // indirect
 	k8s.io/apimachinery v0.20.5 // indirect
+	k8s.io/client-go v0.20.5 // indirect
 	k8s.io/klog/v2 v2.4.0 // indirect
 	k8s.io/utils v0.0.0-20201110183641-67b214c5f920 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.0.2 // indirect

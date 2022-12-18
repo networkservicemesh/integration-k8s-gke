@@ -20,7 +20,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/suite"
-	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp" // This is required for GKE authentication
 
 	"github.com/networkservicemesh/integration-tests/suites/basic"
 	"github.com/networkservicemesh/integration-tests/suites/features"
