@@ -51,6 +51,7 @@ jobs:
       - name: Setup cluster
         working-directory: ${{ github.repository }}
         run: |
+            gcloud components install gke-gcloud-auth-plugin
             gcloud container clusters create "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --machine-type="${GKE_CLUSTER_TYPE}" --num-nodes="${GKE_CLUSTER_NUM_NODES}" --zone="${GKE_CLUSTER_ZONE}" -q
             echo "Writing config to ${KUBECONFIG}"
             gcloud container clusters get-credentials "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}"
