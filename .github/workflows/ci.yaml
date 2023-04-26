@@ -71,6 +71,11 @@ jobs:
         env:
           ARTIFACTS_DIR: ${{ github.repository }}/logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
+      - name: Print Dirs
+        working-directory: ${{ github.repository }}
+        run: |
+            ls .
+            ls ./logs
       - name: Upload logs               # 9. Upload logs
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
