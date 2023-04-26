@@ -21,7 +21,6 @@ jobs:
   checkgomod:
     uses: networkservicemesh/.github/.github/workflows/checkgomod.yaml@main
 
-
   gke:
     environment: GKE
     name: Google Kubernetes Engine
@@ -72,6 +71,12 @@ jobs:
         env:
           ARTIFACTS_DIR: ${{ github.repository }}/logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
+      - name: Upload logs               # 9. Upload logs
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }}
+        with:
+          name: logs-${{ github.run_number }}
+          path: ${{ github.repository }}/logs
       - name: Cleanup
         if: ${{ always() }}
         working-directory: ${{ github.repository }}
@@ -81,9 +86,3 @@ jobs:
           GKE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
           GKE_CLUSTER_NAME: gke-${{ github.run_id }}-${{ github.run_number }}
           GKE_CLUSTER_ZONE: us-central1-a
-      - name: Upload logs               # 9. Upload logs
-        uses: actions/upload-artifact@v2
-        if: ${{ always() }}
-        with:
-          name: logs-${{ github.run_number }}
-          path: ${{ github.repository }}/logs
