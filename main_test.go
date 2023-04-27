@@ -17,8 +17,6 @@
 package main_test
 
 import (
-	"fmt"
-	"os"
 	"testing"
 
 	"github.com/networkservicemesh/integration-tests/suites/memory"
@@ -27,25 +25,4 @@ import (
 
 func TestRunMemorySuite(t *testing.T) {
 	suite.Run(t, new(memory.Suite))
-}
-
-func TestFile(t *testing.T) {
-	data := []byte("Hello, World!")
-
-	err := os.Mkdir("logs", os.ModePerm)
-	if err != nil {
-		fmt.Printf("mkdir err: %v\n", err)
-	}
-
-	err = os.WriteFile("./logs/test", data, os.ModePerm)
-	if err != nil {
-		fmt.Printf("write err: %v\n", err)
-	}
-
-	newdata, err := os.ReadFile("./logs/test")
-	if err != nil {
-		fmt.Printf("read err: %v\n", err)
-	}
-
-	fmt.Printf("newdata: %v\n", string(newdata))
 }

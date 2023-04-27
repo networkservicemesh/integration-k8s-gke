@@ -71,11 +71,15 @@ jobs:
         env:
           ARTIFACTS_DIR: logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
-      - name: Print Dirs
+      - name: Cleanup
+        if: ${{ always() }}
         working-directory: ${{ github.repository }}
         run: |
-            ls .
-            ls ./logs
+          gcloud container clusters delete "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}" -q
+        env:
+          GKE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          GKE_CLUSTER_NAME: gke-${{ github.run_id }}-${{ github.run_number }}
+          GKE_CLUSTER_ZONE: us-central1-a
       - name: Upload logs               # 9. Upload logs
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
