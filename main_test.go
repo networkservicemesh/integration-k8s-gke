@@ -25,7 +25,7 @@ import (
 func TestFile(t *testing.T) {
 	data := []byte("Hello, World!")
 
-	err := os.Mkdir("logs", os.ModeDir)
+	err := os.Mkdir("logs", os.ModePerm)
 	if err != nil {
 		fmt.Printf("mkdir err: %v\n", err)
 	}
