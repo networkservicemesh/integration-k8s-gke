@@ -17,11 +17,22 @@
 package main_test
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
 
 func TestFile(t *testing.T) {
 	data := []byte("Hello, World!")
-	os.WriteFile("./logs/test", data, os.ModeAppend)
+	err := os.WriteFile("./logs/test", data, os.ModeAppend)
+	if err != nil {
+		fmt.Printf("write err: %v\n", err)
+	}
+
+	newdata, err := os.ReadFile("./logs/test")
+	if err != nil {
+		fmt.Printf("read err: %v\n", err)
+	}
+
+	fmt.Printf("newdata: %v\n", string(newdata))
 }
