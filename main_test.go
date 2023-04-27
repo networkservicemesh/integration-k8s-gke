@@ -20,7 +20,14 @@ import (
 	"fmt"
 	"os"
 	"testing"
+
+	"github.com/networkservicemesh/integration-tests/suites/memory"
+	"github.com/stretchr/testify/suite"
 )
+
+func TestRunMemorySuite(t *testing.T) {
+	suite.Run(t, new(memory.Suite))
+}
 
 func TestFile(t *testing.T) {
 	data := []byte("Hello, World!")
