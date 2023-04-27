@@ -23,5 +23,5 @@ import (
 
 func TestFile(t *testing.T) {
 	data := []byte("Hello, World!")
-	os.WriteFile("logs/test", data, os.ModeAppend)
+	os.WriteFile("./logs/test", data, os.ModeAppend)
 }
