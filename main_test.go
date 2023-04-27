@@ -30,7 +30,7 @@ func TestFile(t *testing.T) {
 		fmt.Printf("mkdir err: %v\n", err)
 	}
 
-	err = os.WriteFile("./logs/test", data, os.ModeAppend)
+	err = os.WriteFile("./logs/test", data, os.ModePerm)
 	if err != nil {
 		fmt.Printf("write err: %v\n", err)
 	}
