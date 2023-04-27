@@ -70,7 +70,7 @@ jobs:
           export KUBECONFIG=$(pwd)/config
           go test -count 1 -timeout 1h55m -race -v ./...
         env:
-          ARTIFACTS_DIR: ${{ github.repository }}/logs
+          ARTIFACTS_DIR: logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
       - name: Cleanup
         if: ${{ always() }}
