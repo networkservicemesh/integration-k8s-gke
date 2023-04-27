@@ -6,6 +6,21 @@ on:
     branches:
       - 'release/**'
 jobs:
+  yamllint:
+    uses: networkservicemesh/.github/.github/workflows/yamllint.yaml@main
+
+  shellcheck:
+    uses: networkservicemesh/.github/.github/workflows/shellcheck.yaml@main
+
+  golangci-lint:
+    uses: networkservicemesh/.github/.github/workflows/golangci-lint.yaml@main
+
+  exclude-fmt-errorf:
+    uses: networkservicemesh/.github/.github/workflows/exclude-fmt-errorf.yaml@main
+
+  checkgomod:
+    uses: networkservicemesh/.github/.github/workflows/checkgomod.yaml@main
+
   gke:
     environment: GKE
     name: Google Kubernetes Engine
@@ -18,6 +33,10 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.16
+      - name: Checkout files
+        uses: actions/checkout@v2
+        with:
+          path: ${{ github.repository }}
       - name: Run integration tests
         working-directory: ${{ github.repository }}
         run: |
