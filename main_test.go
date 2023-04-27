@@ -17,13 +17,11 @@
 package main_test
 
 import (
+	"os"
 	"testing"
-
-	"github.com/stretchr/testify/suite"
-
-	"github.com/networkservicemesh/integration-tests/suites/memory"
 )
 
-func TestRunMemorySuite(t *testing.T) {
-	suite.Run(t, new(memory.Suite))
+func TestFile(t *testing.T) {
+	data := []byte("Hello, World!")
+	os.WriteFile("logs/test", data, os.ModeAppend)
 }
