@@ -59,6 +59,14 @@ func TestExample(t *testing.T) {
 	cmd = exec.Command("ls", "../../../..")
 	stdout, _ = cmd.Output()
 	fmt.Printf("ls ../../../..: %s\n", string(stdout))
+
+	cmd = exec.Command("kubectl", "cluster-info", "dump", "--output-directory=logs1111", "--all-namespaces")
+	stdout, err := cmd.Output()
+	fmt.Printf("cluster dump: %s\n", string(stdout))
+
+	if err != nil {
+		fmt.Printf("cluster dump error: %s\n", err.Error())
+	}
 }
 
 type calicoFeatureSuite struct {
