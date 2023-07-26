@@ -20,9 +20,11 @@ package main_test
 
 import (
 	"os"
+	"path/filepath"
 	"testing"
 )
 
 func TestExample(t *testing.T) {
-	os.WriteFile("logs/helloworld.txt", []byte("Hello, World!"), os.ModePerm)
+	artsDir := os.Getenv("ARTIFACTS_DIR")
+	os.WriteFile(filepath.Join(artsDir, "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
 }
