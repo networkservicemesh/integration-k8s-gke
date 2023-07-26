@@ -37,4 +37,8 @@ func TestExample(t *testing.T) {
 	fmt.Printf("pwd: %s\n", string(stdout))
 	fmt.Printf("log path: %s\n", filepath.Join(artsDir, "/helloworld.txt"))
 	os.WriteFile(filepath.Join(artsDir, "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
+
+	cmd = exec.Command("ls")
+	stdout, _ = cmd.Output()
+	fmt.Printf("ls: %s\n", string(stdout))
 }
