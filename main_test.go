@@ -26,5 +26,8 @@ import (
 
 func TestExample(t *testing.T) {
 	artsDir := os.Getenv("ARTIFACTS_DIR")
+	if artsDir == "" {
+		artsDir = "logs"
+	}
 	os.WriteFile(filepath.Join(artsDir, "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
 }
