@@ -20,6 +20,7 @@ package main_test
 
 import (
 	"fmt"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -36,6 +37,7 @@ func TestExample(t *testing.T) {
 	stdout, _ := cmd.Output()
 	fmt.Printf("pwd: %s\n", string(stdout))
 	fmt.Printf("log path: %s\n", filepath.Join("./", artsDir, "/helloworld.txt"))
+	os.Mkdir("logs", fs.ModePerm)
 	os.WriteFile(filepath.Join("./", "artsDir", "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
 	os.WriteFile(filepath.Join("./", artsDir, "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
 
