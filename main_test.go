@@ -25,6 +25,9 @@ import (
 	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/networkservicemesh/integration-tests/suites/memory"
+	"github.com/stretchr/testify/suite"
 )
 
 func TestExample(t *testing.T) {
@@ -56,4 +59,29 @@ func TestExample(t *testing.T) {
 	cmd = exec.Command("ls", "../../../..")
 	stdout, _ = cmd.Output()
 	fmt.Printf("ls ../../../..: %s\n", string(stdout))
+}
+
+type calicoFeatureSuite struct {
+	memory.Suite
+}
+
+func (s *calicoFeatureSuite) BeforeTest(suiteName, testName string) {
+	switch testName {
+	case
+		"TestKernel2kernel",
+		"TestKernel2ethernet2kernel":
+		s.T().Skip()
+	}
+}
+
+func TestRunMemorySuite(t *testing.T) {
+	cmd := exec.Command("pwd")
+	stdout, _ := cmd.Output()
+	fmt.Printf("pwd: %s\n", string(stdout))
+
+	suite.Run(t, new(calicoFeatureSuite))
+
+	cmd = exec.Command("ls")
+	stdout, _ = cmd.Output()
+	fmt.Printf("ls: %s\n", string(stdout))
 }
