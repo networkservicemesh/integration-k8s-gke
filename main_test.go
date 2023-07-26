@@ -19,7 +19,9 @@
 package main_test
 
 import (
+	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 )
@@ -29,5 +31,10 @@ func TestExample(t *testing.T) {
 	if artsDir == "" {
 		artsDir = "logs"
 	}
+
+	cmd := exec.Command("pwd")
+	stdout, _ := cmd.Output()
+	fmt.Printf("pwd: %s\n", string(stdout))
+	fmt.Printf("log path: %s\n", filepath.Join(artsDir, "/helloworld.txt"))
 	os.WriteFile(filepath.Join(artsDir, "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
 }
