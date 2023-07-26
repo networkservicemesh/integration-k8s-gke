@@ -41,4 +41,12 @@ func TestExample(t *testing.T) {
 	cmd = exec.Command("ls")
 	stdout, _ = cmd.Output()
 	fmt.Printf("ls: %s\n", string(stdout))
+
+	cmd = exec.Command("ls", "..")
+	stdout, _ = cmd.Output()
+	fmt.Printf("ls ..: %s\n", string(stdout))
+
+	cmd = exec.Command("ls", "../..")
+	stdout, _ = cmd.Output()
+	fmt.Printf("ls ../..: %s\n", string(stdout))
 }
