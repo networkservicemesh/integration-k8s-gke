@@ -36,9 +36,7 @@ jobs:
         working-directory: ${{ github.repository }}
         run: |
           export KUBECONFIG=$(pwd)/config
-          go test -count 1 -timeout 1h55m -race -v ./... -parallel 4
-        env:
-          ARTIFACTS_DIR: logs
+          go test -count 1 -timeout 1h55m -race -v ./...
       - name: Upload logs               # 9. Upload logs
         uses: actions/upload-artifact@v2
         if: ${{ always() }}
