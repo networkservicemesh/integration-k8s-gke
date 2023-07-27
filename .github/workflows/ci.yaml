@@ -68,7 +68,7 @@ jobs:
         working-directory: ${{ github.repository }}
         run: |
           kubectl config view
-          export KUBECONFIG=./config
+          export KUBECONFIG="config"
           go test -count 1 -timeout 1h55m -race -v ./...
         env:
           ARTIFACTS_DIR: logs
