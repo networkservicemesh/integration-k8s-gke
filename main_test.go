@@ -64,13 +64,14 @@ func TestExample(t *testing.T) {
 	}
 
 	fmt.Printf("singleClusterKubeconfig: %s\n", singleClusterKubeConfig)
-	exec.Command("cat", singleClusterKubeConfig).Run()
+	stdout, err := exec.Command("cat", singleClusterKubeConfig).Output()
+	fmt.Printf("cat: %s err: %v\n", string(stdout), err)
 	cmd = exec.Command("kubectl", "cluster-info", fmt.Sprintf("--kubeconfig=\"%v\"", singleClusterKubeConfig), "dump", "--output-directory=logs1111", "--all-namespaces", "--v=9")
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &stderr
-	err := cmd.Run()
+	err = cmd.Run()
 	fmt.Printf("cluster dump: %s\n", out.String())
 
 	if err != nil {
