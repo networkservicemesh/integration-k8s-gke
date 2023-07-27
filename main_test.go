@@ -26,6 +26,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/networkservicemesh/integration-tests/suites/memory"
 )
 
 func TestExample(t *testing.T) {
@@ -62,6 +64,11 @@ func TestExample(t *testing.T) {
 	if singleClusterKubeConfig == "" {
 		singleClusterKubeConfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
 	}
+
+	mem := new(memory.Suite)
+	r := mem.Runner(".")
+
+	r.Run(fmt.Sprintf("cat %s", singleClusterKubeConfig))
 
 	fmt.Printf("singleClusterKubeconfig: %s\n", singleClusterKubeConfig)
 	stdout, err := exec.Command("cat", singleClusterKubeConfig).Output()
