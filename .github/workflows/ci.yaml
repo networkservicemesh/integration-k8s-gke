@@ -72,7 +72,7 @@ jobs:
         env:
           ARTIFACTS_DIR: logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
-          KUBECONFIG: $(pwd)/config
+          KUBECONFIG: config
       - name: Cleanup
         if: ${{ always() }}
         working-directory: ${{ github.repository }}
