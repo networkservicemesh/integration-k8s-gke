@@ -66,6 +66,7 @@ func TestExample(t *testing.T) {
 	}
 
 	mem := new(memory.Suite)
+	mem.SetT(t)
 	r := mem.Runner(".")
 
 	r.Run(fmt.Sprintf("cat %s", singleClusterKubeConfig))
