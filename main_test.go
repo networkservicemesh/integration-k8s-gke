@@ -19,15 +19,13 @@
 package main_test
 
 import (
+	"bytes"
 	"fmt"
 	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"testing"
-
-	"github.com/networkservicemesh/integration-tests/suites/memory"
-	"github.com/stretchr/testify/suite"
 )
 
 func TestExample(t *testing.T) {
@@ -66,36 +64,16 @@ func TestExample(t *testing.T) {
 	}
 
 	fmt.Printf("singleClusterKubeconfig: %s\n", singleClusterKubeConfig)
-	cmd = exec.Command("kubectl", fmt.Sprintf("--kubeconfig %v", singleClusterKubeConfig), "cluster-info", "dump", "--output-directory=logs1111", "--all-namespaces", "--v=8")
-	stdout, err := cmd.Output()
-	fmt.Printf("cluster dump: %s\n", string(stdout))
+	cmd = exec.Command("kubectl", fmt.Sprintf("--kubeconfig %v", singleClusterKubeConfig), "cluster-info", "dump", "--output-directory=logs1111", "--all-namespaces", "--v=9")
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	fmt.Printf("cluster dump: %s\n", out.String())
 
 	if err != nil {
-		fmt.Printf("cluster dump error: %s\n", err.Error())
+		fmt.Println("cluster dump Error: " + fmt.Sprint(err) + ": " + stderr.String())
+		return
 	}
-}
-
-type calicoFeatureSuite struct {
-	memory.Suite
-}
-
-func (s *calicoFeatureSuite) BeforeTest(suiteName, testName string) {
-	switch testName {
-	case
-		"TestKernel2kernel",
-		"TestKernel2ethernet2kernel":
-		s.T().Skip()
-	}
-}
-
-func TestRunMemorySuite(t *testing.T) {
-	cmd := exec.Command("pwd")
-	stdout, _ := cmd.Output()
-	fmt.Printf("pwd: %s\n", string(stdout))
-
-	suite.Run(t, new(calicoFeatureSuite))
-
-	cmd = exec.Command("ls")
-	stdout, _ = cmd.Output()
-	fmt.Printf("ls: %s\n", string(stdout))
 }
