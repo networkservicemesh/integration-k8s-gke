@@ -65,6 +65,7 @@ func TestExample(t *testing.T) {
 		singleClusterKubeConfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
 	}
 
+	fmt.Printf("singleClusterKubeconfig: %s\n", singleClusterKubeConfig)
 	cmd = exec.Command("kubectl", "cluster-info", "dump", "--output-directory=logs1111", "--all-namespaces", fmt.Sprintf("--kubeconfig %v", singleClusterKubeConfig))
 	stdout, err := cmd.Output()
 	fmt.Printf("cluster dump: %s\n", string(stdout))
