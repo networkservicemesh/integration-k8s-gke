@@ -67,7 +67,7 @@ jobs:
       - name: Run integration tests
         working-directory: ${{ github.repository }}
         run: |
-          export KUBECONFIG=$(pwd)/config
+          export KUBECONFIG=./config
           go test -count 1 -timeout 1h55m -race -v ./...
         env:
           ARTIFACTS_DIR: logs
