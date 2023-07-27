@@ -68,11 +68,11 @@ jobs:
         working-directory: ${{ github.repository }}
         run: |
           kubectl config view
-          export KUBECONFIG="config"
           go test -count 1 -timeout 1h55m -race -v ./...
         env:
           ARTIFACTS_DIR: logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
+          KUBECONFIG: ./config
       - name: Cleanup
         if: ${{ always() }}
         working-directory: ${{ github.repository }}
