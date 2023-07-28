@@ -68,7 +68,7 @@ jobs:
         working-directory: ${{ github.repository }}
         run: |
           export KUBECONFIG=$(pwd)/config
-          go test -count 1 -timeout 1h55m -race -v ./...
+          go test -count 1 -timeout 1h55m -race -v ./... -parallel 4
         env:
           ARTIFACTS_DIR: logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
