@@ -72,7 +72,7 @@ jobs:
         env:
           ARTIFACTS_DIR: logs
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
-          KUBECONFIG: config
+          KUBECONFIG: /home/runner/work/integration-k8s-gke/integration-k8s-gke/networkservicemesh/integration-k8s-gke/config
       - name: Cleanup
         if: ${{ always() }}
         working-directory: ${{ github.repository }}

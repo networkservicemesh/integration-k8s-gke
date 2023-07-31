@@ -36,6 +36,10 @@ func TestExample(t *testing.T) {
 		artsDir = "logs"
 	}
 
+	mem := new(memory.Suite)
+	mem.SetT(t)
+	r := mem.Runner(".")
+
 	cmd := exec.Command("pwd")
 	stdout, _ := cmd.Output()
 	fmt.Printf("pwd: %s\n", string(stdout))
@@ -48,31 +52,20 @@ func TestExample(t *testing.T) {
 	stdout, _ = cmd.Output()
 	fmt.Printf("ls: %s\n", string(stdout))
 
-	cmd = exec.Command("ls", "..")
-	stdout, _ = cmd.Output()
-	fmt.Printf("ls ..: %s\n", string(stdout))
+	stdout, err := exec.Command("kubectl", "config", "view").Output()
+	fmt.Printf("kubectl config view: %s err: %v\n", string(stdout), err)
 
-	cmd = exec.Command("ls", "../../..")
-	stdout, _ = cmd.Output()
-	fmt.Printf("ls ../../..: %s\n", string(stdout))
-
-	cmd = exec.Command("ls", "../../../..")
-	stdout, _ = cmd.Output()
-	fmt.Printf("ls ../../../..: %s\n", string(stdout))
+	r.Run("kubectl config view")
 
 	var singleClusterKubeConfig = os.Getenv("KUBECONFIG")
 	if singleClusterKubeConfig == "" {
 		singleClusterKubeConfig = filepath.Join(os.Getenv("HOME"), ".kube", "config")
 	}
 
-	mem := new(memory.Suite)
-	mem.SetT(t)
-	r := mem.Runner(".")
-
 	r.Run(fmt.Sprintf("cat %s", singleClusterKubeConfig))
 
 	fmt.Printf("singleClusterKubeconfig: %s\n", singleClusterKubeConfig)
-	stdout, err := exec.Command("cat", singleClusterKubeConfig).Output()
+	stdout, err = exec.Command("cat", singleClusterKubeConfig).Output()
 	fmt.Printf("cat: %s err: %v\n", string(stdout), err)
 	cmd = exec.Command("kubectl", "cluster-info", "--kubeconfig=\"./config\"", "dump", "--output-directory=logs1111", "--all-namespaces", "--v=9")
 	var out bytes.Buffer
