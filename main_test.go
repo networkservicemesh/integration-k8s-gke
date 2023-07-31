@@ -81,6 +81,7 @@ func TestRunMemorySuite(t *testing.T) {
 	stdout, _ := cmd.Output()
 	fmt.Printf("pwd: %s\n", string(stdout))
 
+	os.Setenv("KUBECONFIG", "/home/nikita/.kube/config")
 	suite.Run(t, new(calicoFeatureSuite))
 
 	cmd = exec.Command("ls")
