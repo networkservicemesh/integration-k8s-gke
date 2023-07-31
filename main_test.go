@@ -19,15 +19,14 @@
 package main_test
 
 import (
-	"bytes"
 	"fmt"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"testing"
 
 	"github.com/networkservicemesh/integration-tests/suites/memory"
+	"github.com/stretchr/testify/suite"
 )
 
 func TestExample(t *testing.T) {
@@ -43,10 +42,6 @@ func TestExample(t *testing.T) {
 	cmd := exec.Command("pwd")
 	stdout, _ := cmd.Output()
 	fmt.Printf("pwd: %s\n", string(stdout))
-	fmt.Printf("log path: %s\n", filepath.Join("./", artsDir, "/helloworld.txt"))
-	os.Mkdir("logs", fs.ModePerm)
-	os.WriteFile(filepath.Join("./", "artsDir", "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
-	os.WriteFile(filepath.Join("./", artsDir, "/helloworld.txt"), []byte("Hello, World!"), os.ModePerm)
 
 	cmd = exec.Command("ls")
 	stdout, _ = cmd.Output()
@@ -63,45 +58,32 @@ func TestExample(t *testing.T) {
 	}
 
 	r.Run(fmt.Sprintf("cat %s", singleClusterKubeConfig))
-
 	fmt.Printf("singleClusterKubeconfig: %s\n", singleClusterKubeConfig)
-	stdout, err = exec.Command("cat", singleClusterKubeConfig).Output()
-	fmt.Printf("cat: %s err: %v\n", string(stdout), err)
-	cmd = exec.Command("kubectl", "cluster-info", "dump", "--output-directory=logs", "--all-namespaces", "--v=9")
-	var out bytes.Buffer
-	var stderr bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &stderr
-	err = cmd.Run()
-	fmt.Printf("cluster dump: %s\n", out.String())
 
-	if err != nil {
-		fmt.Println("cluster dump Error: " + fmt.Sprint(err) + ": " + stderr.String())
-		return
+	r.Run(fmt.Sprintf("kubectl cluster-info --kubeconfig \"%s\" dump --output-directory=logs --all-namespaces --v=9", singleClusterKubeConfig))
+}
+
+type calicoFeatureSuite struct {
+	memory.Suite
+}
+
+func (s *calicoFeatureSuite) BeforeTest(suiteName, testName string) {
+	switch testName {
+	case
+		"TestKernel2kernel",
+		"TestKernel2ethernet2kernel":
+		s.T().Skip()
 	}
 }
 
-// type calicoFeatureSuite struct {
-// 	memory.Suite
-// }
+func TestRunMemorySuite(t *testing.T) {
+	cmd := exec.Command("pwd")
+	stdout, _ := cmd.Output()
+	fmt.Printf("pwd: %s\n", string(stdout))
 
-// func (s *calicoFeatureSuite) BeforeTest(suiteName, testName string) {
-// 	switch testName {
-// 	case
-// 		"TestKernel2kernel",
-// 		"TestKernel2ethernet2kernel":
-// 		s.T().Skip()
-// 	}
-// }
+	suite.Run(t, new(calicoFeatureSuite))
 
-// func TestRunMemorySuite(t *testing.T) {
-// 	cmd := exec.Command("pwd")
-// 	stdout, _ := cmd.Output()
-// 	fmt.Printf("pwd: %s\n", string(stdout))
-
-// 	suite.Run(t, new(calicoFeatureSuite))
-
-// 	cmd = exec.Command("ls")
-// 	stdout, _ = cmd.Output()
-// 	fmt.Printf("ls: %s\n", string(stdout))
-// }
+	cmd = exec.Command("ls")
+	stdout, _ = cmd.Output()
+	fmt.Printf("ls: %s\n", string(stdout))
+}
