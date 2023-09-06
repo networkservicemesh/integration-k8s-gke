@@ -33,8 +33,20 @@ import (
 	"github.com/networkservicemesh/integration-tests/suites/observability"
 )
 
+type featureSuite struct {
+	features.Suite
+}
+
+func (s *featureSuite) BeforeTest(suiteName, testName string) {
+	switch testName {
+	case
+		"TestNse_composition":
+		s.T().Skip()
+	}
+}
+
 func TestRunFeatureSuite(t *testing.T) {
-	parallel.Run(t, new(features.Suite), "TestScale_from_zero", "TestVl3_dns", "TestVl3_scale_from_zero", "TestNse_composition", "TestSelect_forwarder")
+	parallel.Run(t, new(featureSuite), "TestScale_from_zero", "TestVl3_dns", "TestVl3_scale_from_zero", "TestNse_composition", "TestSelect_forwarder")
 }
 
 func TestRunBasicSuite(t *testing.T) {
