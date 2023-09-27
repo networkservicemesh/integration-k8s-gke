@@ -34,7 +34,7 @@ import (
 )
 
 func TestRunFeatureSuite(t *testing.T) {
-	parallel.Run(t, new(features.Suite), "TestScale_from_zero", "TestVl3_dns", "TestVl3_scale_from_zero", "TestNse_composition", "TestSelect_forwarder")
+	parallel.Run(t, new(features.Suite), "TestScale_from_zero", "TestVl3_dns", "TestVl3_scale_from_zero", "TestVl3_lb", "TestNse_composition", "TestSelect_forwarder")
 }
 
 func TestRunBasicSuite(t *testing.T) {
