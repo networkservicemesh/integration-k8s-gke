@@ -31,21 +31,21 @@ jobs:
         run: |
           sudo chmod -R 777 /bin
       - name: Set up go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v5
         with:
           go-version: 1.20.5
       - name: Install gcloud-sdk
-        uses: google-github-actions/setup-gcloud@v0
+        uses: google-github-actions/setup-gcloud@v2
         with:
           service_account_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
           project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
       - name: Checkout deployments
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: networkservicemesh/deployments-k8s
           path: networkservicemesh/deployments-k8s
       - name: Checkout files
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: ${{ github.repository }}
       - name: Setup cluster
@@ -81,8 +81,8 @@ jobs:
           GKE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
           GKE_CLUSTER_NAME: gke-${{ github.run_id }}-${{ github.run_number }}
           GKE_CLUSTER_ZONE: us-central1-a
-      - name: Upload logs               # 9. Upload logs
-        uses: actions/upload-artifact@v2
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: logs-${{ github.run_number }}
