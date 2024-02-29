@@ -51,9 +51,11 @@ jobs:
       - name: Setup cluster
         working-directory: ${{ github.repository }}
         run: |
+            GKE_K8S_VERSION=$(echo $GKE_K8S_VERSION | cut -c 2-)
+
             gcloud components install gke-gcloud-auth-plugin
             gcloud components update
-            gcloud container clusters create "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --machine-type="${GKE_CLUSTER_TYPE}" --num-nodes="${GKE_CLUSTER_NUM_NODES}" --zone="${GKE_CLUSTER_ZONE}" --enable-gvnic -q
+            gcloud container clusters create "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --machine-type="${GKE_CLUSTER_TYPE}" --num-nodes="${GKE_CLUSTER_NUM_NODES}" --zone="${GKE_CLUSTER_ZONE}" --cluster-version="${GKE_K8S_VERSION}" --enable-gvnic -q
             echo "Writing config to ${KUBECONFIG}"
             gcloud container clusters get-credentials "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}"
         env:
@@ -62,12 +64,14 @@ jobs:
           GKE_CLUSTER_ZONE: us-central1-a
           GKE_CLUSTER_TYPE: n1-standard-2
           GKE_CLUSTER_NUM_NODES: 2
+          GKE_K8S_VERSION: ${{ vars.NSM_KUBERNETES_VERSION }}
           KUBECONFIG: config
           USE_GKE_GCLOUD_AUTH_PLUGIN: true
       - name: Run integration tests
         working-directory: ${{ github.repository }}
         run: |
           export KUBECONFIG=$(pwd)/config
+          kubectl version
           go test -count 1 -timeout 1h55m -race -v ./... -parallel 4
         env:
           ARTIFACTS_DIR: logs
