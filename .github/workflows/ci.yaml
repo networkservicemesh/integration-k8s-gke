@@ -54,8 +54,16 @@ jobs:
             GKE_K8S_VERSION=$(echo $GKE_K8S_VERSION | cut -c 2-)
 
             gcloud components install gke-gcloud-auth-plugin
-            gcloud components update
-            gcloud container clusters create "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --machine-type="${GKE_CLUSTER_TYPE}" --num-nodes="${GKE_CLUSTER_NUM_NODES}" --zone="${GKE_CLUSTER_ZONE}" --cluster-version="${GKE_K8S_VERSION}" --enable-gvnic -q
+            gcloud components install kubectl --version=${GKE_K8S_VERSION}
+
+            gcloud container clusters create "${GKE_CLUSTER_NAME}" \
+              --project="${GKE_PROJECT_ID}" \
+              --machine-type="${GKE_CLUSTER_TYPE}" \
+              --num-nodes="${GKE_CLUSTER_NUM_NODES}" \
+              --zone="${GKE_CLUSTER_ZONE}" \
+              --cluster-version="${GKE_K8S_VERSION}" \
+              --enable-gvnic -q
+              
             echo "Writing config to ${KUBECONFIG}"
             gcloud container clusters get-credentials "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}"
         env:
