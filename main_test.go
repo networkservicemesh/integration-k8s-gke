@@ -2,6 +2,8 @@
 //
 // Copyright (c) 2023 Cisco and/or its affiliates.
 //
+// Copyright (c) 2024 Pragmagic Inc. and/or its affiliates.
+//
 // SPDX-License-Identifier: Apache-2.0
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +36,14 @@ import (
 )
 
 func TestRunFeatureSuite(t *testing.T) {
-	parallel.Run(t, new(features.Suite), "TestScale_from_zero", "TestVl3_dns", "TestVl3_scale_from_zero", "TestNse_composition", "TestSelect_forwarder")
+	excludedTests := []string{
+		"TestScale_from_zero",
+		"TestVl3_dns",
+		"TestVl3_scale_from_zero",
+		"TestNse_composition",
+		"TestSelect_forwarder"}
+
+	parallel.Run(t, new(features.Suite), parallel.WithExcludedTests(excludedTests))
 }
 
 func TestRunBasicSuite(t *testing.T) {
