@@ -82,7 +82,7 @@ jobs:
           GKE_CLUSTER_NAME: gke-${{ github.run_id }}-${{ github.run_number }}
           GKE_CLUSTER_ZONE: us-central1-a
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: logs-${{ github.run_number }}
