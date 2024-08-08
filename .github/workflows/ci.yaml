@@ -48,12 +48,36 @@ jobs:
           credentials_json: ${{ secrets.GCLOUD_SERVICE_KEY }}
       - name: Install gcloud-sdk
         uses: google-github-actions/setup-gcloud@v2
+      - name: Install kubectl
+        run: |
+            curl -LO https://dl.k8s.io/release/${{ vars.NSM_KUBERNETES_VERSION }}/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin/kubectl
       - name: Setup cluster
         working-directory: ${{ github.repository }}
         run: |
+            # Get a specific GKE cluster version that matches NSM_KUBERNETES_VERSION
+            K8S_VERSION=$(echo ${{ vars.NSM_KUBERNETES_VERSION }} | cut -d '.' -f 1,2 | cut -c 2-)
+            GKE_CLUSTER_VERSION=$(gcloud container get-server-config --zone="$GKE_CLUSTER_ZONE" --format=json \
+              | jq '.channels[] | select (.channel=="REGULAR") | .validVersions[]' \
+              | grep -m 1 "$K8S_VERSION" | tr -d '"')
+
+            if [ -z "$GKE_CLUSTER_VERSION"]; then
+              echo "GKE cluster version is not valid: $GKE_CLUSTER_VERSION"
+              exit 1
+            fi
+
             gcloud components install gke-gcloud-auth-plugin
             gcloud components update
-            gcloud container clusters create "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --machine-type="${GKE_CLUSTER_TYPE}" --num-nodes="${GKE_CLUSTER_NUM_NODES}" --zone="${GKE_CLUSTER_ZONE}" --enable-gvnic -q
+
+            gcloud container clusters create "${GKE_CLUSTER_NAME}" \
+              --project="${GKE_PROJECT_ID}" \
+              --machine-type="${GKE_CLUSTER_TYPE}" \
+              --num-nodes="${GKE_CLUSTER_NUM_NODES}" \
+              --zone="${GKE_CLUSTER_ZONE}" \
+              --cluster-version="${GKE_CLUSTER_VERSION}" \
+              --enable-gvnic -q
+
             echo "Writing config to ${KUBECONFIG}"
             gcloud container clusters get-credentials "${GKE_CLUSTER_NAME}" --project="${GKE_PROJECT_ID}" --zone="${GKE_CLUSTER_ZONE}"
         env:
@@ -68,6 +92,7 @@ jobs:
         working-directory: ${{ github.repository }}
         run: |
           export KUBECONFIG=$(pwd)/config
+          kubectl version
           go test -count 1 -timeout 1h55m -race -v ./... -parallel 4
         env:
           ARTIFACTS_DIR: logs
