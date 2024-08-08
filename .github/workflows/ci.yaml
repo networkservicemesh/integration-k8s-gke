@@ -62,6 +62,11 @@ jobs:
               | jq '.channels[] | select (.channel=="REGULAR") | .validVersions[]' \
               | grep -m 1 "$K8S_VERSION" | tr -d '"')
 
+            if [ -z "$GKE_CLUSTER_VERSION"]; then
+              echo "GKE cluster version is not valid: $GKE_CLUSTER_VERSION"
+              exit 1
+            fi
+
             gcloud components install gke-gcloud-auth-plugin
             gcloud components update
 
